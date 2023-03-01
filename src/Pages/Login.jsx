@@ -12,6 +12,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import axios from "axios";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
+import swal from "sweetalert";
 
 const Login = ({
   email,
@@ -58,25 +59,43 @@ const Login = ({
     try {
       const url = "http://localhost:9090/login";
       await axios.post(url, inputs).then((data) => {
-        //console.log(data.data.status);
+        if (data.data.error == "User doesn't exist") {
+          setLoginResponse("User not found.");
+          swal({
+            icon: "error",
+            title: "Error",
+            text: "This student/user does not exist.",
+          });
+        }
         if (data.data.status == "Logged in successfully") {
           setLoginStyle("text-green-600 font-black italic mt-3");
           setLoginResponse("Login successful");
-          window.localStorage.setItem("token", data.data.data);
-          window.localStorage.setItem("logged-in", true);
-          window.location.href = "/";
-        } else {
+          swal({
+            icon: "success",
+            title: "Login successful",
+            text: "Welcome back",
+          }).then(() => {
+            window.localStorage.setItem("token", data.data.data);
+            window.localStorage.setItem("logged-in", true);
+            window.location.href = "/";
+          });
+        } else if (data.data.error == "Invalid password") {
           setLoginStyle("text-red-600 font-black italic mt-3");
-          setLoginResponse("Wrong Password");
+          setLoginResponse("Incorrect password");
+          swal({
+            icon: "error",
+            title: "Oops...",
+            text: "Incorrect password",
+          });
         }
       });
     } catch (error) {
       if (
         error.response &&
         error.response.status >= 400 &&
-        error.response.status <= 500
+        error.response.status <= 505
       ) {
-        setLogin(error.response.data.message);
+        alert("Network error");
       }
     }
   };

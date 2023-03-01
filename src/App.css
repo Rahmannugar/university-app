@@ -4,7 +4,6 @@
 
 #login-background {
     background-image: url("../src/images/about-university-manitoba-bannatyne-campus-01b_0.jpg");
-    width: 100vw;
     height: 40vh;
     background-position: center;
 }
@@ -22,4 +21,8 @@
     position: absolute;
     height: max-content;
     padding-bottom: 100px;
+}
+
+#user-picture {
+    border-radius: 50%;
 }

@@ -4,6 +4,7 @@ import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import axios from "axios";
 import React, { useState } from "react";
 import { useEffect } from "react";
+import Swal from "sweetalert2";
 
 const ForgotPassword = ({
   password,
@@ -91,11 +92,20 @@ const ForgotPassword = ({
     })
       .then((res) => res.json())
       .then((data) => {
-        alert(data.status);
         if (data.status == "Valid student") {
+          Swal.fire({
+            icon: "success",
+            title: "Student email verification",
+            text: "This email has been found in our records.",
+          });
           setShowEmailMessage("");
           setLoader(true);
         } else {
+          Swal.fire({
+            icon: "error",
+            title: "Student email verification",
+            text: "This email wasn't found in our records.",
+          });
           setShowEmailMessage(
             <h1 className="text-center text-xl">No record found.</h1>
           );
@@ -107,8 +117,13 @@ const ForgotPassword = ({
     e.preventDefault();
     try {
       await axios.post(postUrl, inputs);
-      alert("Password updated successfully");
-      window.location.href = "/login";
+      Swal.fire({
+        icon: "success",
+        title: "Password Change",
+        text: "Password has been changed successfully",
+      }).then(() => {
+        window.location.href = "/login";
+      });
     } catch (error) {
       console.log(error);
     }

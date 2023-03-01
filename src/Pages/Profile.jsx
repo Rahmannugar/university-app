@@ -35,9 +35,15 @@ const Profile = () => {
         setUserData(data.data);
         setIsLoaded(true);
         if (data.data == "Token expired") {
-          alert("Session expired, login again");
-          window.localStorage.clear();
-          window.location.href = "/login";
+          swal({
+            icon: "warning",
+            title: "Timeout",
+            text: "Session expired, login again",
+          });
+          setTimeout(() => {
+            window.location.href = "/login";
+            window.localStorage.clear();
+          }, 2000);
         }
       });
 
@@ -99,7 +105,11 @@ const Profile = () => {
           {userData.firstName} {userData.lastName} personal details.
         </h1>
         <div className="flex items-center justify-center py-10">
-          <img src={imageUrl} alt="student" className="h-60 w-72" />
+          <img
+            src={imageUrl}
+            alt="student"
+            className="h-60 w-72 sm:h-80 sm:w-80 border-8 border-black"
+          />
         </div>
         <ImageUpload
           userImage={userImage}

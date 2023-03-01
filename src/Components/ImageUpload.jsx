@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import storage from "./firebaseStorage";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const ImageUpload = ({ userImage, setUserImage, setImageUrl, userData }) => {
   const [percent, setPercent] = useState(0);
@@ -41,9 +42,32 @@ const ImageUpload = ({ userImage, setUserImage, setImageUrl, userData }) => {
       const email = userData.email;
       const inputs = { email, imageUrl };
       const postImageUrl = "http://localhost:9090/upload";
-      await axios.post(postImageUrl, inputs);
-      setImageUrl(imageUrl);
-      window.location.href = "/profile";
+
+      Swal.fire({
+        title: "Are you sure about this?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, upload image!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          setImageUrl(imageUrl);
+          axios
+            .post(postImageUrl, inputs)
+            .then(() => {
+              Swal.fire(
+                "Success",
+                "Image has been uploaded to our database.",
+                "success"
+              );
+            })
+            .then(() => {
+              window.location.href = "/profile";
+            });
+        }
+      });
     } catch (error) {
       if (
         error.response &&

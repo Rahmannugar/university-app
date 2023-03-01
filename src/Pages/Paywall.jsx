@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import swal from "sweetalert";
 
 const Paywall = () => {
   const [userData, setUserData] = useState([]);
@@ -20,9 +21,15 @@ const Paywall = () => {
       .then((data) => {
         setUserData(data.data);
         if (data.data == "Token expired") {
-          alert("Session expired, login again");
-          window.localStorage.clear();
-          window.location.href = "/login";
+          swal({
+            icon: "warning",
+            title: "Timeout",
+            text: "Session expired, login again",
+          });
+          setTimeout(() => {
+            window.location.href = "/login";
+            window.localStorage.clear();
+          }, 2000);
         }
       });
   }, []);
@@ -35,9 +42,10 @@ const Paywall = () => {
         your school fees payments was successful, pls refer to your mail or
         faculty officer for more instructions.
       </span>
-      <button id="btn">
-        <a href="/">Your dashboard</a>
-      </button>
+
+      <a href="/">
+        <button id="btn">Your dashboard</button>
+      </a>
     </div>
   );
 };

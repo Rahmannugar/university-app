@@ -41,7 +41,11 @@ const Result = () => {
       .then((data) => {
         setUserData(data.data);
         if (data.data == "Token expired") {
-          alert("Session expired, login again");
+          swal({
+            icon: "warning",
+            title: "Timeout",
+            text: "Session expired, login again",
+          });
           window.localStorage.clear();
           window.location.href = "/login";
         }

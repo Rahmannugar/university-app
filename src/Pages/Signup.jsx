@@ -13,6 +13,7 @@ import FileUploadPage from "../Components/FileUploadPage";
 import Courses from "../Components/Courses";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
+import swal from "sweetalert";
 
 const auth = getAuth(app);
 const useStyles = makeStyles((theme) => ({
@@ -152,6 +153,7 @@ const Signup = ({
     }
     setLoginStyle("text-green-900 font-black italic mt-3");
     setLoginResponse("User created successfully");
+
     window.location.href = "/login";
   };
 
@@ -181,7 +183,11 @@ const Signup = ({
         // SMS sent. Prompt user to type the code from the message, then sign the
         // user in with confirmationResult.confirm(code).
         window.confirmationResult = confirmationResult;
-        alert("otp sent");
+        swal({
+          icon: "success",
+          title: "Success",
+          text: "OTP sent!",
+        });
         setVerifyOTP(true);
         // ...
       })
@@ -198,12 +204,20 @@ const Signup = ({
       .then((result) => {
         // User signed in successfully.
         const user = result.user;
-        alert("Mobile verification done");
+        swal({
+          icon: "success",
+          title: "Success",
+          text: "Mobile verification done",
+        });
         // ...
       })
       .catch((error) => {
         // User couldn't sign in (bad verification code?)
-        alert("Invalid OTP");
+        swal({
+          icon: "error",
+          title: "Error",
+          text: "Invalid OTP",
+        });
         // ...
       });
   };
@@ -241,176 +255,180 @@ const Signup = ({
               <h1 className="font-black">University registration form.</h1>
             </div>
           </Grid>
-          <div>
-            <div className="px-10">
-              <TextField
-                label="First name"
-                placeholder="First name"
-                fullWidth
-                required
-                value={firstName}
-                onChange={(e) => {
-                  setFirstName(e.target.value);
-                }}
-              />
-            </div>
-            <div className="px-10">
-              <TextField
-                label="Last name"
-                placeholder="Last name"
-                fullWidth
-                required
-                value={lastName}
-                onChange={(e) => {
-                  setLastName(e.target.value);
-                }}
-              />
-            </div>
-            <div className="mt-3 px-10">
-              <div className={classes.container}>
+
+          <div className="sm:grid grid-cols-2">
+            <div>
+              <div className="px-10">
                 <TextField
-                  id="date"
-                  label="Date of birth"
-                  type="date"
-                  value={birthDate}
+                  label="First name"
+                  placeholder="First name"
+                  fullWidth
+                  required
+                  value={firstName}
                   onChange={(e) => {
-                    setBirthDate(e.target.value);
+                    setFirstName(e.target.value);
                   }}
-                  className={classes.textField}
-                  InputLabelProps={{
-                    shrink: true,
+                />
+              </div>
+              <div className="px-10">
+                <TextField
+                  label="Last name"
+                  placeholder="Last name"
+                  fullWidth
+                  required
+                  value={lastName}
+                  onChange={(e) => {
+                    setLastName(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="mt-3 px-10">
+                <div className={classes.container}>
+                  <TextField
+                    id="date"
+                    label="Date of birth"
+                    type="date"
+                    value={birthDate}
+                    onChange={(e) => {
+                      setBirthDate(e.target.value);
+                    }}
+                    className={classes.textField}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div id="recaptcha-container"></div>
+              <div className="px-10">
+                <select
+                  defaultValue="Select gender"
+                  className="border-black border-2 w-5/6 mt-5"
+                  onChange={(e) => setGender(e.target.value)}
+                >
+                  <option defaultValue="Select gender" disabled>
+                    Select gender
+                  </option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
+
+              {nation}
+              <div className="px-10">
+                <TextField
+                  label="ZIP code"
+                  placeholder="ZIP code"
+                  fullWidth
+                  type="number"
+                  required
+                  value={zipCode}
+                  onChange={(e) => {
+                    setZipCode(e.target.value);
                   }}
                 />
               </div>
             </div>
 
-            <div id="recaptcha-container"></div>
-            <div className="px-10">
-              <select
-                defaultValue="Select gender"
-                className="border-black border-2 w-5/6 mt-5"
-                onChange={(e) => setGender(e.target.value)}
-              >
-                <option defaultValue="Select gender" disabled>
-                  Select gender
-                </option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-              </select>
-            </div>
-
-            {nation}
-            <div className="px-10">
-              <TextField
-                label="ZIP code"
-                placeholder="ZIP code"
-                fullWidth
-                type="number"
-                required
-                value={zipCode}
-                onChange={(e) => {
-                  setZipCode(e.target.value);
-                }}
-              />
-            </div>
-            <div className="mt-3 px-10">
-              <label htmlFor="O'level result">Upload O'level results</label>
-            </div>
-            <FileUploadPage />
-
-            <Courses setCourse={setCourse} />
-            <div className="px-10">
-              <TextField
-                label="Email address"
-                placeholder="Email address"
-                fullWidth
-                required
-                value={email}
-                onChange={handleEmail}
-              />
-            </div>
-            <div className={messageColor}>{message}</div>
-            <div className="px-10">
-              <TextField
-                label="Phone"
-                placeholder="Phone"
-                minLength={0}
-                maxLength={10}
-                fullWidth
-                required
-                type="number"
-                value={phone}
-                onChange={handlePhoneChange}
-              />
-              {verifyButton ? (
-                <div className="flex justify-center items-center">
-                  <input
-                    type="button"
-                    value="verify"
-                    onClick={onSignInSubmit}
-                    className="bg-black text-white rounded-sm px-3 py-2 mt-3 hover:bg-blue-500"
-                  />
-                </div>
-              ) : null}
-            </div>
-
-            {verifyOTP ? (
+            <div>
+              <div className="mt-3 px-10">
+                <label htmlFor="O'level result">Upload O'level results</label>
+              </div>
+              <FileUploadPage />
+              <Courses setCourse={setCourse} />
               <div className="px-10">
                 <TextField
-                  label="OTP"
-                  placeholder="Enter OTP"
+                  label="Email address"
+                  placeholder="Email address"
+                  fullWidth
+                  required
+                  value={email}
+                  onChange={handleEmail}
+                />
+              </div>
+              <div className={messageColor}>{message}</div>
+              <div className="px-10">
+                <TextField
+                  label="Phone"
+                  placeholder="Phone"
+                  minLength={0}
+                  maxLength={10}
                   fullWidth
                   required
                   type="number"
-                  value={otp}
+                  value={phone}
+                  onChange={handlePhoneChange}
+                />
+                {verifyButton ? (
+                  <div className="flex justify-center items-center">
+                    <input
+                      type="button"
+                      value="verify"
+                      onClick={onSignInSubmit}
+                      className="bg-black text-white rounded-sm px-3 py-2 mt-3 hover:bg-blue-500"
+                    />
+                  </div>
+                ) : null}
+              </div>
+              {verifyOTP ? (
+                <div className="px-10">
+                  <TextField
+                    label="OTP"
+                    placeholder="Enter OTP"
+                    fullWidth
+                    required
+                    type="number"
+                    value={otp}
+                    onChange={(e) => {
+                      setOtp(e.target.value);
+                    }}
+                  />
+                  <div className="flex justify-center items-center">
+                    <input
+                      type="button"
+                      value="Verify OTP"
+                      onClick={verifyCode}
+                      className="bg-black text-white rounded-sm px-3 py-2 mt-3 hover:bg-blue-500"
+                    />
+                  </div>
+                </div>
+              ) : null}
+              <div className="flex items-center justify-center pl-10 pr-5">
+                <TextField
+                  label="Password"
+                  placeholder="Password"
+                  type={hiddenPassword ? "password" : "text"}
+                  className="w-screen"
+                  required
+                  value={password}
                   onChange={(e) => {
-                    setOtp(e.target.value);
+                    setPassword(e.target.value);
                   }}
                 />
-                <div className="flex justify-center items-center">
-                  <input
-                    type="button"
-                    value="Verify OTP"
-                    onClick={verifyCode}
-                    className="bg-black text-white rounded-sm px-3 py-2 mt-3 hover:bg-blue-500"
-                  />
-                </div>
+                <span onClick={changeVisibility}>
+                  {visible ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                </span>
               </div>
-            ) : null}
-
-            <div className="flex items-center justify-center pl-10 pr-5">
-              <TextField
-                label="Password"
-                placeholder="Password"
-                type={hiddenPassword ? "password" : "text"}
-                className="w-screen"
-                required
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-              />
-              <span onClick={changeVisibility}>
-                {visible ? <VisibilityIcon /> : <VisibilityOffIcon />}
-              </span>
             </div>
-            <div className="mt-7 text-center">
-              <Button type="submit" color="primary" variant="contained">
-                Sign up
-              </Button>
-              <h1 className={loginStyle}>{loginResponse}</h1>
-              <div className="mt-7 mb-3">
-                <Typography>
-                  Existing student?
-                  <a
-                    href="/login"
-                    className="underline underline-offset-4
+          </div>
+
+          <div className="mt-7 text-center">
+            <Button type="submit" color="primary" variant="contained">
+              Sign up
+            </Button>
+            <h1 className={loginStyle}>{loginResponse}</h1>
+            <div className="mt-7 mb-3">
+              <Typography>
+                Existing student?
+                <a
+                  href="/login"
+                  className="underline underline-offset-4
 "
-                  >
-                    Login
-                  </a>
-                </Typography>
-              </div>
+                >
+                  Login
+                </a>
+              </Typography>
             </div>
           </div>
         </Grid>

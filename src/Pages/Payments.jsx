@@ -10,6 +10,8 @@ import {
   signInWithPhoneNumber,
 } from "firebase/auth";
 import axios from "axios";
+import swal from "sweetalert";
+import Swal from "sweetalert2";
 
 const auth = getAuth(app);
 const Payments = ({
@@ -30,6 +32,7 @@ const Payments = ({
   const [expiryMonth, setExpiryMonth] = useState();
   const [expiryYear, setExpiryYear] = useState();
   const [ccv, setCcv] = useState();
+
   const url = "http://localhost:9090/user";
   useEffect(() => {
     fetch(url, {
@@ -48,9 +51,15 @@ const Payments = ({
       .then((data) => {
         setUserData(data.data);
         if (data.data == "Token expired") {
-          alert("Session expired, login again");
-          window.localStorage.clear();
-          window.location.href = "/login";
+          swal({
+            icon: "warning",
+            title: "Timeout",
+            text: "Session expired, login again",
+          });
+          setTimeout(() => {
+            window.location.href = "/login";
+            window.localStorage.clear();
+          }, 2000);
         }
       });
   }, []);
@@ -109,7 +118,11 @@ const Payments = ({
         // SMS sent. Prompt user to type the code from the message, then sign the
         // user in with confirmationResult.confirm(code).
         window.confirmationResult = confirmationResult;
-        alert("otp sent");
+        swal({
+          icon: "success",
+          title: "Success",
+          text: "OTP sent!",
+        });
         setVerifyOTP(true);
         // ...
       })
@@ -126,12 +139,20 @@ const Payments = ({
       .then((result) => {
         // User signed in successfully.
         const user = result.user;
-        alert("Mobile verification done");
+        swal({
+          icon: "success",
+          title: "Success",
+          text: "Mobile verification done",
+        });
         // ...
       })
       .catch((error) => {
         // User couldn't sign in (bad verification code?)
-        alert("Invalid OTP");
+        swal({
+          icon: "error",
+          title: "Error",
+          text: "Invalid OTP",
+        });
         // ...
       });
   };
@@ -142,7 +163,49 @@ const Payments = ({
     const inputs = { email, paid };
     try {
       const url = "http://localhost:9090/payments";
-      await axios.post(url, inputs);
+
+      Swal.fire({
+        title: "Are you sure about making this payment?",
+        text: "You won't be able to revert this payment!",
+        icon: "warning",
+        showConfirmButton: true,
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, make this payment",
+        cancelButtonText: "Cancel",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios.post(url, inputs).then(() => {
+            let timerInterval;
+            Swal.fire({
+              title: "Payments",
+              html: "Processing payments",
+              timer: 4000,
+              timerProgressBar: true,
+              didOpen: () => {
+                Swal.showLoading();
+                const b = Swal.getHtmlContainer().querySelector("b");
+                timerInterval = setInterval(() => {
+                  b.textContent = Swal.getTimerLeft();
+                }, 100);
+              },
+              willClose: () => {
+                clearInterval(timerInterval);
+              },
+            }).then((result) => {
+              Swal.fire(
+                "Payments successful",
+                "Your school fees payment process is successful.",
+                "success"
+              );
+              setTimeout(() => {
+                window.location.href = "/paywall";
+              }, 1000);
+            });
+          });
+        }
+      });
     } catch (error) {
       if (
         error.response &&
@@ -152,12 +215,10 @@ const Payments = ({
         console.log(error.response.data.message);
       }
     }
-    alert("payment successful");
-    window.location.href = "/paywall";
   };
 
   return (
-    <div className="container">
+    <div id="container">
       <form onSubmit={onPaymentSubmit}>
         <h1 className="font-black text-2xl text-center py-10">
           School Payment Gateway.

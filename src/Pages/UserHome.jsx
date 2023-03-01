@@ -6,17 +6,23 @@ import CalendarDate from "../Components/CalendarDate";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import LaptopChromebook from "@material-ui/icons/LaptopChromebook";
+import Swal from "sweetalert2";
 
 const UserHome = () => {
   const [hasPaid, setHasPaid] = useState([]);
   const [userData, setUserData] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoadedTwice, setIsLoadedTwice] = useState(false);
+
+  const [userPicture, setUserPicture] = useState(
+    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+  );
   const date = new Date();
 
   const url = "http://localhost:9090/user";
   const paymentUrl = "http://localhost:9090/retrievepayments";
-
-  const loadOnce = [isLoaded];
+  const fetchedImageUrl = "http://localhost:9090/image";
+  const loadOnce = [isLoaded, isLoadedTwice];
 
   useEffect(() => {
     fetch(url, {
@@ -36,9 +42,16 @@ const UserHome = () => {
         setUserData(data.data);
         setIsLoaded(true);
         if (data.data == "Token expired") {
-          alert("Session expired, login again");
-          window.localStorage.clear();
-          window.location.href = "/login";
+          setIsLoaded(false);
+          setUserData("");
+          Swal.fire({
+            icon: "warning",
+            title: "Timeout",
+            text: "Session expired, login again",
+          }).then(() => {
+            window.location.href = "/login";
+            window.localStorage.clear();
+          });
         }
       });
     if (isLoaded == true) {
@@ -56,10 +69,34 @@ const UserHome = () => {
       })
         .then((res) => res.json())
         .then((data) => {
+          setIsLoadedTwice(true);
           if (data.error == "User doesn't exist") {
             setHasPaid(false);
           } else {
             setHasPaid(data.data.paid);
+          }
+        });
+    }
+
+    if (isLoadedTwice == true) {
+      fetch(fetchedImageUrl, {
+        method: "POST",
+        crossDomain: true,
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({
+          email: userData.email,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.error == "User doesn't exist") {
+            null;
+          } else {
+            setUserPicture(data.data.imageUrl);
           }
         });
     }
@@ -78,12 +115,23 @@ const UserHome = () => {
             <SearchIcon />
           </button>
         </div>
-        <h1 className="font-black text-4xl md:text-5xl px-10 pt-5 md:pt-5">
-          Welcome {userData.firstName} {userData.lastName},
-        </h1>
-        <p className="font-bold text-xl px-10 py-3">
-          Ready to excel in your academics today?
-        </p>
+        <div className="flex pt-5 px-3 justify-between sm:px-10 md:px-28">
+          <div className="md:pt-10">
+            <h1 className="font-black text-2xl sm:text-5xl md:text-5xl pt-2">
+              Welcome {userData.firstName} {userData.lastName},
+            </h1>
+            <p className="font-bold sm:text-xl py-3 md:px-4">
+              Ready to excel in your academics today?
+            </p>
+          </div>
+
+          <img
+            src={userPicture}
+            alt="user-image"
+            id="user-picture"
+            className="w-32 h-32 sm:w-48 sm:h-48 md:w-56 md:h-56"
+          />
+        </div>
       </div>
 
       <h1 className="font-black mt-10 text-center border-black border-b-2 text-2xl">
