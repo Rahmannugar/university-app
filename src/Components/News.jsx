@@ -5,7 +5,8 @@ import axios from "axios";
 import NewsFile from "./NewsFile";
 
 const News = () => {
-  const api_key = import.meta.env.VITE_API_KEY;
+  //const api_key = import.meta.env.VITE_API_KEY;
+  const api_key = "9e5c40353e2f460d98859b44d27fba67";
   const [articles, setArticles] = useState([]);
   const newsData = ["education", "business", "university", "nigeria", "sports"];
   const news = Math.floor(Math.random() * newsData.length);
