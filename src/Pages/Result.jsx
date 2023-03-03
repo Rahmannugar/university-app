@@ -23,7 +23,7 @@ const Result = () => {
     const value = e.target.value;
     setSessionYear(value);
   };
-  const url = "http://localhost:9090/user";
+  const url = "https://university-backend.onrender.com/user";
   useEffect(() => {
     fetch(url, {
       method: "POST",

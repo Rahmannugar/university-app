@@ -19,9 +19,9 @@ const UserHome = () => {
   );
   const date = new Date();
 
-  const url = "http://localhost:9090/user";
-  const paymentUrl = "http://localhost:9090/retrievepayments";
-  const fetchedImageUrl = "http://localhost:9090/image";
+  const url = "https://university-backend.onrender.com/user";
+  const paymentUrl = "https://university-backend.onrender.com/retrievepayments";
+  const fetchedImageUrl = "https://university-backend.onrender.com/image";
   const loadOnce = [isLoaded, isLoadedTwice];
 
   useEffect(() => {

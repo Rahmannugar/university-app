@@ -19,7 +19,6 @@ const Login = ({
   password,
   setEmail,
   setPassword,
-  isValid,
   setIsValid,
   message,
   setMessage,
@@ -57,7 +56,7 @@ const Login = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = "https://university-backend.vercel.app/login";
+      const url = "https://university-backend.onrender.com/login";
       await axios.post(url, inputs).then((data) => {
         if (data.data.error == "User doesn't exist") {
           setLoginResponse("User not found.");
@@ -65,7 +64,8 @@ const Login = ({
             icon: "error",
             title: "Error",
             text: "This student/user does not exist.",
-          });''
+          });
+          ("");
         }
         if (data.data.status == "Logged in successfully") {
           setLoginStyle("text-green-600 font-black italic mt-3");
@@ -161,8 +161,7 @@ const Login = ({
                   className="underline underline-offset-4
 "
                 >
-                  Click here to change.
-              .
+                  Click here to change. .
                 </a>
               </Typography>
             </div>

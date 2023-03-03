@@ -33,7 +33,7 @@ const Payments = ({
   const [expiryYear, setExpiryYear] = useState();
   const [ccv, setCcv] = useState();
 
-  const url = "http://localhost:9090/user";
+  const url = "https://university-backend.onrender.com/user";
   useEffect(() => {
     fetch(url, {
       method: "POST",
@@ -162,7 +162,7 @@ const Payments = ({
     const email = userData.email;
     const inputs = { email, paid };
     try {
-      const url = "http://localhost:9090/payments";
+      const url = "https://university-backend.onrender.com/payments";
 
       Swal.fire({
         title: "Are you sure about making this payment?",
@@ -218,7 +218,7 @@ const Payments = ({
   };
 
   return (
-    <div id="container">
+    <div className="container">
       <form onSubmit={onPaymentSubmit}>
         <h1 className="font-black text-2xl text-center py-10">
           School Payment Gateway.

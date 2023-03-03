@@ -72,8 +72,8 @@ const ForgotPassword = ({
     }
   };
 
-  const url = "http://localhost:9090/forgot-password";
-  const postUrl = "http://localhost:9090/reset-password";
+  const url = "https://university-backend.onrender.com/forgot-password";
+  const postUrl = "https://university-backend.onrender.com/reset-password";
   const inputs = { email, password };
 
   const handleVerifyEmail = (e) => {

@@ -3,7 +3,7 @@ import swal from "sweetalert";
 
 const Paywall = () => {
   const [userData, setUserData] = useState([]);
-  const url = "http://localhost:9090/user";
+  const url = "https://university-backend.onrender.com/user";
   useEffect(() => {
     fetch(url, {
       method: "POST",

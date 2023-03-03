@@ -70,18 +70,18 @@ const Signup = ({
     setVisible(!visible);
     setHiddenPassword(!hiddenPassword);
   };
-  const inputsPhp = {
-    firstName,
-    lastName,
-    birthDate,
-    gender,
-    country,
-    zipCode,
-    course,
-    email,
-    phone,
-    password,
-  };
+  // const inputsPhp = {
+  //   firstName,
+  //   lastName,
+  //   birthDate,
+  //   gender,
+  //   country,
+  //   zipCode,
+  //   course,
+  //   email,
+  //   phone,
+  //   password,
+  // };
   const inputs = {
     firstName,
     lastName,
@@ -138,9 +138,9 @@ const Signup = ({
   }, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post("http://localhost:7070/api/user/save", inputsPhp);
+    // await axios.post("http://localhost:7070/api/user/save", inputsPhp);
     try {
-      const url = "http://localhost:9090/signup";
+      const url = "https://university-backend.onrender.com/signup";
       await axios.post(url, inputs);
     } catch (error) {
       if (

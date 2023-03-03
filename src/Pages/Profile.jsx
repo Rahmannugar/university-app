@@ -11,9 +11,9 @@ const Profile = () => {
   const [isLoadedTwice, setIsLoadedTwice] = useState(false);
   const [hasPaid, setHasPaid] = useState([]);
 
-  const url = "http://localhost:9090/user";
-  const fetchedImageUrl = "http://localhost:9090/image";
-  const paymentUrl = "http://localhost:9090/retrievepayments";
+  const url = "https://university-backend.onrender.com/user";
+  const fetchedImageUrl = "https://university-backend.onrender.com/image";
+  const paymentUrl = "https://university-backend.onrender.com/retrievepayments";
 
   const loadTwice = [isLoaded, isLoadedTwice];
 

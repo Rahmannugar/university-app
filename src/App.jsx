@@ -54,7 +54,6 @@ const App = () => {
               setEmail={setEmail}
               password={password}
               setPassword={setPassword}
-              isValid={isValid}
               setIsValid={setIsValid}
               message={message}
               setMessage={setMessage}
