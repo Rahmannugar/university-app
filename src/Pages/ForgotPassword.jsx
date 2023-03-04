@@ -1,6 +1,6 @@
-import { TextField } from "@material-ui/core";
-import VisibilityIcon from "@material-ui/icons/Visibility";
-import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
+import TextField from "@mui/material/TextField";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import axios from "axios";
 import React, { useState } from "react";
 import { useEffect } from "react";
@@ -18,7 +18,6 @@ const ForgotPassword = ({
   const [visible, setVisible] = useState("true");
   const [hiddenPassword, setHiddenPassword] = useState("true");
   const [checkPassword, setCheckPassword] = useState("");
-  const [equalPassword, setEqualPassword] = useState(true);
   const [loader, setLoader] = useState(false);
   const [showEmailMessage, setShowEmailMessage] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -140,6 +139,7 @@ const ForgotPassword = ({
             placeholder="Email address"
             required
             className="w-96"
+            variant="outlined"
             value={email}
             onChange={handleEmail}
           />

@@ -11,7 +11,7 @@ const Courses = ({ setCourse }) => {
 
       <select
         defaultValue="Select course"
-        className="border-black border-2 w-5/6"
+        className="border-gray-300 rounded-md border w-full py-4 mt-3 mb-3"
         onChange={onChange}
       >
         <option defaultValue="Select course" disabled>

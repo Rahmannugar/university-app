@@ -93,7 +93,6 @@ const App = () => {
               setVerifyOTP={setVerifyOTP}
               otp={otp}
               setOtp={setOtp}
-              isValid={isValid}
               setIsValid={setIsValid}
               message={message}
               setMessage={setMessage}

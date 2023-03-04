@@ -6,27 +6,22 @@ import {
   RecaptchaVerifier,
   signInWithPhoneNumber,
 } from "firebase/auth";
-import { Avatar, Button, Grid, TextField, Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { Avatar, Button, Grid, TextField, Typography } from "@mui/material";
 import { useEffect } from "react";
 import FileUploadPage from "../Components/FileUploadPage";
 import Courses from "../Components/Courses";
-import VisibilityIcon from "@material-ui/icons/Visibility";
-import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import FormControl from "@mui/material/FormControl";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import InputLabel from "@mui/material/InputLabel";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import { grey } from "@mui/material/colors";
 import swal from "sweetalert";
 
 const auth = getAuth(app);
-const useStyles = makeStyles((theme) => ({
-  container: {
-    display: "flex",
-    flexWrap: "wrap",
-  },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: 200,
-  },
-}));
+
 const Signup = ({
   nation,
   setNation,
@@ -56,20 +51,23 @@ const Signup = ({
   setVerifyOTP,
   otp,
   setOtp,
-  isValid,
   setIsValid,
   message,
   setMessage,
 }) => {
-  const [visible, setVisible] = useState("true");
-  const [hiddenPassword, setHiddenPassword] = useState("true");
   const [loginStyle, setLoginStyle] = useState("");
   const [loginResponse, setLoginResponse] = useState("");
 
-  const changeVisibility = () => {
-    setVisible(!visible);
-    setHiddenPassword(!hiddenPassword);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
   };
+
+  const color = grey[900];
+
   // const inputsPhp = {
   //   firstName,
   //   lastName,
@@ -105,6 +103,9 @@ const Signup = ({
       setPhone(inputNumber);
     }
   };
+
+  const avatarStyle = { backgroundColor: "black" };
+
   useEffect(() => {
     const getCountry = async () => {
       const data = await axios.get("https://restcountries.com/v3.1/all");
@@ -115,7 +116,7 @@ const Signup = ({
             name="country"
             id="country"
             defaultValue="country"
-            className="border-black border-2 w-5/6"
+            className="border-gray-300 rounded-md border w-full py-4 mt-3 mb-3"
             onChange={(e) => {
               setCountry(e.target.value);
             }}
@@ -221,8 +222,6 @@ const Signup = ({
         // ...
       });
   };
-  const classes = useStyles();
-  const avatarStyle = { backgroundColor: "black" };
 
   const emailRegex = /\S+@\S+\.\S+/;
   let messageColor;
@@ -252,13 +251,13 @@ const Signup = ({
             <div className="mt-10">
               <Avatar style={avatarStyle}></Avatar>
               <br />
-              <h1 className="font-black">University registration form.</h1>
+              <h1 className="font-black pb-5">University registration form.</h1>
             </div>
           </Grid>
 
           <div className="sm:grid grid-cols-2">
             <div>
-              <div className="px-10">
+              <div className="px-10 py-3">
                 <TextField
                   label="First name"
                   placeholder="First name"
@@ -270,7 +269,7 @@ const Signup = ({
                   }}
                 />
               </div>
-              <div className="px-10">
+              <div className="px-10 py-3">
                 <TextField
                   label="Last name"
                   placeholder="Last name"
@@ -282,8 +281,8 @@ const Signup = ({
                   }}
                 />
               </div>
-              <div className="mt-3 px-10">
-                <div className={classes.container}>
+              <div className="py-3 px-10">
+                <div>
                   <TextField
                     id="date"
                     label="Date of birth"
@@ -292,7 +291,6 @@ const Signup = ({
                     onChange={(e) => {
                       setBirthDate(e.target.value);
                     }}
-                    className={classes.textField}
                     InputLabelProps={{
                       shrink: true,
                     }}
@@ -304,7 +302,7 @@ const Signup = ({
               <div className="px-10">
                 <select
                   defaultValue="Select gender"
-                  className="border-black border-2 w-5/6 mt-5"
+                  className="border-gray-300 rounded-md border w-full py-4 mt-3 mb-3"
                   onChange={(e) => setGender(e.target.value)}
                 >
                   <option defaultValue="Select gender" disabled>
@@ -316,7 +314,7 @@ const Signup = ({
               </div>
 
               {nation}
-              <div className="px-10">
+              <div className="px-10 py-3">
                 <TextField
                   label="ZIP code"
                   placeholder="ZIP code"
@@ -332,12 +330,12 @@ const Signup = ({
             </div>
 
             <div>
-              <div className="mt-3 px-10">
+              <div className="py-3 px-10">
                 <label htmlFor="O'level result">Upload O'level results</label>
               </div>
               <FileUploadPage />
               <Courses setCourse={setCourse} />
-              <div className="px-10">
+              <div className="px-10 py-3">
                 <TextField
                   label="Email address"
                   placeholder="Email address"
@@ -348,7 +346,7 @@ const Signup = ({
                 />
               </div>
               <div className={messageColor}>{message}</div>
-              <div className="px-10">
+              <div className="px-10 py-3 ">
                 <TextField
                   label="Phone"
                   placeholder="Phone"
@@ -394,21 +392,37 @@ const Signup = ({
                   </div>
                 </div>
               ) : null}
-              <div className="flex items-center justify-center pl-10 pr-5">
-                <TextField
-                  label="Password"
-                  placeholder="Password"
-                  type={hiddenPassword ? "password" : "text"}
-                  className="w-screen"
-                  required
-                  value={password}
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                  }}
-                />
-                <span onClick={changeVisibility}>
-                  {visible ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                </span>
+
+              <div className="px-10 py-3">
+                <FormControl sx={{ width: "100%" }} variant="outlined">
+                  <InputLabel htmlFor="outlined-adornment-password">
+                    Password
+                  </InputLabel>
+                  <OutlinedInput
+                    id="outlined-adornment-password"
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                          sx={{
+                            color: color,
+                          }}
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label="Password"
+                  />
+                </FormControl>
               </div>
             </div>
           </div>

@@ -1,11 +1,11 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import SearchIcon from "@material-ui/icons/Search";
+import SearchIcon from "@mui/icons-material/Search";
 import CalendarDate from "../Components/CalendarDate";
-import MenuBookIcon from "@material-ui/icons/MenuBook";
-import AccessTimeIcon from "@material-ui/icons/AccessTime";
-import LaptopChromebook from "@material-ui/icons/LaptopChromebook";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import LaptopChromebook from "@mui/icons-material/LaptopChromebook";
 import Swal from "sweetalert2";
 
 const UserHome = () => {

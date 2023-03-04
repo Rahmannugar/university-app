@@ -7,11 +7,17 @@ import {
   Grid,
   TextField,
   Typography,
-} from "@material-ui/core";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+} from "@mui/material";
+import LockOutlinedIcon from "@mui/icons-material/LockClockOutlined";
 import axios from "axios";
-import VisibilityIcon from "@material-ui/icons/Visibility";
-import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import FormControl from "@mui/material/FormControl";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import InputLabel from "@mui/material/InputLabel";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import { grey } from "@mui/material/colors";
 import swal from "sweetalert";
 
 const Login = ({
@@ -23,10 +29,18 @@ const Login = ({
   message,
   setMessage,
 }) => {
-  const [visible, setVisible] = useState("true");
-  const [hiddenPassword, setHiddenPassword] = useState("true");
   const [loginStyle, setLoginStyle] = useState("");
   const [loginResponse, setLoginResponse] = useState("");
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+  const color = grey[900];
 
   const emailRegex = /\S+@\S+\.\S+/;
   let messageColor;
@@ -47,10 +61,6 @@ const Login = ({
     }
   };
 
-  const changeVisibility = () => {
-    setVisible(!visible);
-    setHiddenPassword(!hiddenPassword);
-  };
   const inputs = { email, password };
   const avatarStyle = { backgroundColor: "blue" };
   const handleSubmit = async (e) => {
@@ -113,32 +123,48 @@ const Login = ({
               <h1 className="font-black">Welcome back, Sign in.</h1>
             </div>
           </Grid>
-          <div className="flex items-center justify-center px-10">
+          <div className="px-10 py-3">
             <TextField
               label="Email address"
               placeholder="Email address"
               required
-              className="w-96"
+              fullWidth
+              variant="outlined"
               value={email}
               onChange={handleEmail}
             />
           </div>
           <div className={messageColor}>{message}</div>
-          <div className="flex items-center justify-center pl-10 pr-5">
-            <TextField
-              label="Password"
-              placeholder="Password"
-              type={hiddenPassword ? "password" : "text"}
-              className="w-96"
-              required
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            />
-            <div onClick={changeVisibility} className="">
-              {visible ? <VisibilityIcon /> : <VisibilityOffIcon />}
-            </div>
+          <div className="px-10 py-3">
+            <FormControl sx={{ width: "100%" }} variant="outlined">
+              <InputLabel htmlFor="outlined-adornment-password">
+                Password
+              </InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-password"
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                      sx={{
+                        color: color,
+                      }}
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                label="Password"
+              />
+            </FormControl>
           </div>
 
           <div className="flex items-center justify-center">

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import SearchIcon from "@material-ui/icons/Search";
-import VisibilityIcon from "@material-ui/icons/Visibility";
-import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
-
+import SearchIcon from "@mui/icons-material/Search";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 const Result = () => {
   const [sessionYear, setSessionYear] = useState("2022/2023");
   const [userData, setUserData] = useState([]);
