@@ -45,7 +45,7 @@ const UserNavbar = () => {
               </div>
 
               {/* Mobile view. */}
-              <div className=" flex items-center justify-end">
+              <div className=" flex items-center justify-end z-50">
                 <input
                   type="checkbox"
                   name="hamburger"
@@ -71,7 +71,7 @@ const UserNavbar = () => {
                   id="navbar"
                   className="peer-checked:translate-x-0 bg-white inset-0 w-[calc(100%-4.5rem)] translate-x-[-100%] shadow-xl transition duration-300 md:hidden"
                 >
-                  <ul className=" pt-32 md:px-12 space-y-20 md:space-y-0 text-center">
+                  <ul className=" pt-32 md:px-12 space-y-20 md:space-y-0 text-center absolute">
                     <li onClick={handleLogout}>
                       <span className="relative font-black text-base md:text-2xl bg-red-700 w-14 text-white px-10 py-5 rounded-md">
                         Logout

@@ -243,7 +243,7 @@ const Signup = ({
   };
 
   return (
-    <div>
+    <div className="">
       <form onSubmit={handleSubmit}>
         <Grid>
           <div id="login-background"></div>

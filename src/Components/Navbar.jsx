@@ -55,7 +55,7 @@ const Navbar = () => {
             </div>
 
             {/* Mobile view. */}
-            <div className=" flex items-center justify-end">
+            <div className=" flex items-center justify-end z-50">
               <input
                 type="checkbox"
                 name="hamburger"
@@ -78,7 +78,7 @@ const Navbar = () => {
               </label>
 
               <div id="navbar" className={hidden}>
-                <ul className=" pt-32 md:px-12 space-y-20 md:space-y-0 text-center">
+                <ul className=" pt-32 md:px-12 space-y-20 md:space-y-0 text-center ">
                   <li>
                     <a href="/login">
                       <span className="relative font-black text-base md:text-2xl bg-blue-700 w-14 text-white px-10 py-5 rounded-md">
