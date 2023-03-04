@@ -396,12 +396,13 @@ const Signup = ({
               <div className="px-10 py-3">
                 <FormControl sx={{ width: "100%" }} variant="outlined">
                   <InputLabel htmlFor="outlined-adornment-password">
-                    Password
+                    Password *
                   </InputLabel>
                   <OutlinedInput
                     id="outlined-adornment-password"
                     type={showPassword ? "text" : "password"}
                     value={password}
+                    placeholder="Password"
                     onChange={(e) => {
                       setPassword(e.target.value);
                     }}
