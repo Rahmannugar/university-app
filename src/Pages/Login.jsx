@@ -83,7 +83,7 @@ const Login = ({
           swal({
             icon: "success",
             title: "Login successful",
-            text: "Welcome back",
+            text: "Welcome back.",
           }).then(() => {
             window.localStorage.setItem("token", data.data.data);
             window.localStorage.setItem("logged-in", true);
