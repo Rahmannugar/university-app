@@ -28,7 +28,10 @@ const Home = () => {
         Stories around us.
       </h1>
       <News />
-      <section id="testimonial" className="sm:mb-28 bg-stone-900 text-white">
+      <section
+        id="testimonial"
+        className="sm:mb-28 bg-orange-200 md:px-36 mx-5 sm:mx-10 shadow-xl rounded-lg"
+      >
         <h1
           id="testimonial-h1"
           className="font-bold text-xl text-center pt-20 mt-14 mb-14 sm:mt-28 sm:mb-20"

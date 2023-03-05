@@ -14,7 +14,7 @@ const News = () => {
   useEffect(() => {
     const getArticles = async () => {
       const data = await axios.get(
-        `https://newsapi.org/v2/everything?q=${newsData[news]}&apikey=${api_key}`
+        `https://cors-anywhere.herokuapp.com/https://newsapi.org/v2/everything?q=${newsData[news]}&apikey=${api_key}`
       );
       setArticles(data.data.articles);
     };
