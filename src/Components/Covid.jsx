@@ -3,7 +3,7 @@ import covid_image from "../images/Lovepik_com-450015073-red Coronavirus Vector.
 
 const Covid = () => {
   return (
-    <div className="md:flex px-10 mt-10 bg-blue-200 pt-10 pb-16 mx-5 sm:mx-10 shadow-xl rounded-lg">
+    <div className="md:flex px-10 mt-10 bg-blue-200 pt-10 pb-16 mb-20 mx-5 sm:mx-10 shadow-xl rounded-lg">
       <div className="flex justify-center">
         <img
           src={covid_image}
