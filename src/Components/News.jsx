@@ -5,16 +5,12 @@ import axios from "axios";
 import NewsFile from "./NewsFile";
 
 const News = () => {
-  //const api_key = import.meta.env.VITE_API_KEY;
-  const api_key = "9e5c40353e2f460d98859b44d27fba67";
   const [articles, setArticles] = useState([]);
-  const newsData = ["education", "business", "university", "nigeria", "sports"];
-  const news = Math.floor(Math.random() * newsData.length);
 
   useEffect(() => {
     const getArticles = async () => {
       const data = await axios.get(
-        `https://cors-anywhere.herokuapp.com/https://newsapi.org/v2/everything?q=${newsData[news]}&apikey=${api_key}`
+        "https://university-backend.onrender.com/news"
       );
       setArticles(data.data.articles);
     };
