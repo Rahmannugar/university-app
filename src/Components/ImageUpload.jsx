@@ -41,7 +41,7 @@ const ImageUpload = ({ userImage, setUserImage, setImageUrl, userData }) => {
     try {
       const email = userData.email;
       const inputs = { email, imageUrl };
-      const postImageUrl = "http://localhost:9090/upload";
+      const postImageUrl = "https://university-backend.onrender.com/upload";
 
       Swal.fire({
         title: "Are you sure about this?",
