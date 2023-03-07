@@ -6,7 +6,7 @@ import CalendarDate from "../Components/CalendarDate";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import LaptopChromebook from "@mui/icons-material/LaptopChromebook";
-import Swal from "sweetalert2";
+import swal from "sweetalert";
 
 const UserHome = () => {
   const [hasPaid, setHasPaid] = useState([]);
@@ -44,7 +44,7 @@ const UserHome = () => {
         if (data.data == "Token expired") {
           setIsLoaded(false);
           setUserData("");
-          Swal.fire({
+          swal({
             icon: "warning",
             title: "Timeout",
             text: "Session expired, login again",
