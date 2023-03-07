@@ -31,6 +31,7 @@ const ImageUpload = ({ userImage, setUserImage, setImageUrl, userData }) => {
         // download url
 
         getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          console.log(url);
           uploadImage(url);
         });
       }
@@ -42,32 +43,16 @@ const ImageUpload = ({ userImage, setUserImage, setImageUrl, userData }) => {
       const email = userData.email;
       const inputs = { email, imageUrl };
       const postImageUrl = "https://university-backend.onrender.com/upload";
-
-      Swal.fire({
-        title: "Are you sure about this?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, upload image!",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          setImageUrl(imageUrl);
-          axios
-            .post(postImageUrl, inputs)
-            .then(() => {
-              Swal.fire(
-                "Success",
-                "Image has been uploaded to our database.",
-                "success"
-              );
-            })
-            .then(() => {
-              window.location.href = "/profile";
-            });
-        }
+      setImageUrl(imageUrl);
+      await axios.post(postImageUrl, inputs);
+      swal({
+        icon: "success",
+        title: "Success",
+        text: "Image uploaded successfully",
       });
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 2000);
     } catch (error) {
       if (
         error.response &&

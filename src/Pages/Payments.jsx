@@ -161,51 +161,19 @@ const Payments = ({
     e.preventDefault();
     const email = userData.email;
     const inputs = { email, paid };
+
     try {
       const url = "https://university-backend.onrender.com/payments";
 
-      Swal.fire({
-        title: "Are you sure about making this payment?",
-        text: "You won't be able to revert this payment!",
-        icon: "warning",
-        showConfirmButton: true,
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, make this payment",
-        cancelButtonText: "Cancel",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          axios.post(url, inputs).then(() => {
-            let timerInterval;
-            Swal.fire({
-              title: "Payments",
-              html: "Processing payments",
-              timer: 4000,
-              timerProgressBar: true,
-              didOpen: () => {
-                Swal.showLoading();
-                const b = Swal.getHtmlContainer().querySelector("b");
-                timerInterval = setInterval(() => {
-                  b.textContent = Swal.getTimerLeft();
-                }, 100);
-              },
-              willClose: () => {
-                clearInterval(timerInterval);
-              },
-            }).then((result) => {
-              Swal.fire(
-                "Payments successful",
-                "Your school fees payment process is successful.",
-                "success"
-              );
-              setTimeout(() => {
-                window.location.href = "/paywall";
-              }, 1000);
-            });
-          });
-        }
+      await axios.post(url, inputs);
+      swal({
+        icon: "success",
+        title: "Success",
+        text: "Payment successful",
       });
+      setTimeout(() => {
+        window.location.href = "/paywall";
+      }, 2000);
     } catch (error) {
       if (
         error.response &&
