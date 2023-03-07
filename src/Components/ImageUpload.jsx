@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import storage from "./firebaseStorage";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import axios from "axios";
-import Swal from "sweetalert2";
+import swal from "sweetalert";
 
 const ImageUpload = ({ userImage, setUserImage, setImageUrl, userData }) => {
   const [percent, setPercent] = useState(0);
