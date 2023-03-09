@@ -1,10 +1,16 @@
 import TextField from "@mui/material/TextField";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import axios from "axios";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import swal from "sweetalert";
+import FormControl from "@mui/material/FormControl";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import InputLabel from "@mui/material/InputLabel";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import { grey } from "@mui/material/colors";
 
 const ForgotPassword = ({
   password,
@@ -23,6 +29,8 @@ const ForgotPassword = ({
   const [newPassword, setNewPassword] = useState("");
 
   const updateOnce = [password, newPassword];
+
+  const color = grey[900];
 
   const changeVisibility = () => {
     setVisible(!visible);
@@ -50,6 +58,14 @@ const ForgotPassword = ({
   useEffect(() => {
     handleEqualpassword();
   }, updateOnce);
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   const handleEqualpassword = (e) => {
     if (password == newPassword) {
@@ -153,38 +169,70 @@ const ForgotPassword = ({
         </button>
         {loader ? (
           <>
-            <div className="flex items-center justify-center pl-10 pr-5 mt-3">
-              <TextField
-                label="New Password"
-                placeholder="Enter new password"
-                type={hiddenPassword ? "password" : "text"}
-                className="w-96"
-                required
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-              />
-              <div onClick={changeVisibility} className="">
-                {visible ? <VisibilityIcon /> : <VisibilityOffIcon />}
-              </div>
+            <div className="flex items-center justify-center px-10 py-3">
+              <FormControl variant="outlined" className="w-96">
+                <InputLabel htmlFor="outlined-adornment-password">
+                  Password *
+                </InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-password"
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  placeholder="Password"
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                        sx={{
+                          color: color,
+                        }}
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label="Password"
+                />
+              </FormControl>
             </div>
 
-            <div className="flex items-center justify-center pl-10 pr-5 mt-3">
-              <TextField
-                label="Confirm new Password"
-                placeholder="Confirm new password"
-                type={hiddenPassword ? "password" : "text"}
-                className="w-96"
-                required
-                value={newPassword}
-                onChange={(e) => {
-                  setNewPassword(e.target.value);
-                }}
-              />
-              <div onClick={changeVisibility} className="">
-                {visible ? <VisibilityIcon /> : <VisibilityOffIcon />}
-              </div>
+            <div className="flex items-center justify-center px-10 py-3">
+              <FormControl variant="outlined" className="w-96">
+                <InputLabel htmlFor="outlined-adornment-password">
+                  Password *
+                </InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-password"
+                  type={showPassword ? "text" : "password"}
+                  value={newPassword}
+                  placeholder="Password"
+                  onChange={(e) => {
+                    setNewPassword(e.target.value);
+                  }}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                        sx={{
+                          color: color,
+                        }}
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label="Password"
+                />
+              </FormControl>
             </div>
             {checkPassword}
           </>

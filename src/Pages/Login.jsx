@@ -123,20 +123,20 @@ const Login = ({
               <h1 className="font-black">Welcome back, Sign in.</h1>
             </div>
           </Grid>
-          <div className="px-10 py-3">
+          <div className="flex items-center justify-center px-10">
             <TextField
               label="Email address"
               placeholder="Email address"
               required
-              fullWidth
+              className="w-96"
               variant="outlined"
               value={email}
               onChange={handleEmail}
             />
           </div>
           <div className={messageColor}>{message}</div>
-          <div className="px-10 py-3">
-            <FormControl sx={{ width: "100%" }} variant="outlined">
+          <div className="flex items-center justify-center px-10 py-3">
+            <FormControl variant="outlined" className="w-96">
               <InputLabel htmlFor="outlined-adornment-password">
                 Password *
               </InputLabel>
@@ -188,7 +188,7 @@ const Login = ({
                   className="underline underline-offset-4
 "
                 >
-                  Click here to change. .
+                  Click here to change.
                 </a>
               </Typography>
             </div>

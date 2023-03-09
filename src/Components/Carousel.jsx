@@ -29,7 +29,7 @@ const Carousel = () => {
     setCurrentIndex(newIndex);
   };
   return (
-    <div id="carousel" className="max-w-[1400px] h-[600px] w-full pt-16">
+    <div id="carousel" className="h-[600px] w-full pt-16">
       <div
         style={{ backgroundImage: `url(${slides[currentIndex].url})` }}
         className="w-50% h-full rounded-2xl bg-center bg-cover duration-500"
@@ -48,10 +48,10 @@ const Carousel = () => {
           </a>
         </div>
       </div>
-      <div className="absolute  top-[50%] md:top-[80%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-white text-black cursor-pointer">
+      <div className="absolute top-[50%] md:top-[65%] translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-white text-black cursor-pointer">
         <BsChevronCompactLeft size={30} onClick={prevSlide} />
       </div>
-      <div className="absolute  top-[50%] md:top-[80%] -translate-x-0 translate-y-[-50%] right-5 text-2xl rounded-full p-2 bg-white text-black cursor-pointer">
+      <div className="absolute top-[50%] md:top-[65%] -translate-x-0 translate-y-[-50%] right-5 text-2xl rounded-full p-2 bg-white text-black cursor-pointer">
         <BsChevronCompactRight size={30} onClick={nextSlide} />
       </div>
     </div>
